@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json()); //convert json data(come from client req) to js object
 
 app.get('/', (req, res) => {
-    res.send('Server is Running');
+    res.send('Server is Running!!');
 });
 
 (async () => {
