@@ -1,0 +1,46 @@
+{
+  "name": "support-ticket-system",
+  "version": "1.0.0",
+  "description": "A support ticket management system built with Node.js and Express. Users can create accounts, log in and log out, submit tickets describing issues, and attach screenshots or files. Each user can view their own submitted tickets, while administrators have access to all tickets with the ability to update their status. The system includes protected routes for secure access and uses Sequelize with MySQL for database management.",
+  "main": "index.js",
+
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+
+  "keywords": [
+    "express",
+    "nodejs",
+    "support",
+    "ticket",
+    "system",
+    "helpdesk",
+    "customer-service",
+    "sequelize",
+    "mysql",
+    "backend",
+    "api",
+    "authentication",
+    "session-management"
+  ],
+
+  "author": "Avilash Saha <sahaavilash5055@gmail.com>",
+  "license": "ISC",
+
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.17.2",
+    "sequelize": "^6.37.7"
+  },
+
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
