@@ -1,16 +1,5 @@
-require('dotenv').config();
-
-const express = require('express');
+const app = require('./app')
 const sequelize = require('./config/database');
-
-const app = express();
-
-// built-in middlewire
-app.use(express.json()); //convert json data(come from client req) to js object
-
-app.get('/', (req, res) => {
-    res.send('Server is Running!!');
-});
 
 (async () => {
     try{
