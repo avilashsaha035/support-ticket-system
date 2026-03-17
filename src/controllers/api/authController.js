@@ -1,25 +1,6 @@
 const bcrypt = require('bcryptjs');
-const { User } = require('../models');
+const { User } = require('../../models');
 
-
-// show pages
-const showRegister = (req, res) => {
-    res.render('register');
-};
-
-const showLogin = (req, res) => {
-    res.render('login');
-};
-
-const showDashboard = (req, res) => {
-    if (!req.session.userId) {
-        return res.redirect('/login');
-    }
-    res.render('dashboard');
-};
-
-
-// handle register form submit
 const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -29,8 +10,10 @@ const register = async (req, res) => {
             where: { email }
         });
 
-        if (existingUser) {
-            return res.redirect('/register');
+        if(existingUser) {
+            return res.status(400).json({
+                message: "Email Already Registered!!"
+            })
         }
 
         // hash password
@@ -43,9 +26,10 @@ const register = async (req, res) => {
             password: hashedPassword
         });
 
-        req.session.userId = user.id;
-
-        res.redirect('/dashboard');
+        res.status(201).json({
+            message: "User registered successfully",
+            user
+        });
 
     } catch (error) {
         console.error(error);
@@ -55,7 +39,6 @@ const register = async (req, res) => {
     }
 };
 
-// handle login form submit
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -65,20 +48,27 @@ const login = async (req, res) => {
             where: { email }
         });
 
-        if (!user) {
-            return res.redirect('/login');
+        if(!user) {
+            return res.status(401).json({
+                message: "User not found"
+            });
         }
 
         const isMatch = await bcrypt.compare(password, user.password); // compare password
         if(!isMatch) {
-            return res.redirect('/login');
+            return res.status(401).json({
+                message: "Invalid password"
+            });
         }
 
         // saved session
         req.session.userId = user.id;
         req.session.role = user.role;
 
-        res.redirect('/dashboard');
+        res.json({
+            message: "Login Successful",
+            user
+        });
 
     } catch (error) {
         console.error(error);
@@ -88,19 +78,12 @@ const login = async (req, res) => {
     }
 };
 
-// logout
 const logout = (req, res) => {
     req.session.destroy(() => {
-        res.redirect('/login');
+        return res.json({ 
+            message: "Logged out successfully" 
+        });
     });
 };
 
-
-module.exports = {
-    showRegister,
-    showLogin,
-    showDashboard,
-    register,
-    login,
-    logout
-};
+module.exports = { register, login, logout };

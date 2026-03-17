@@ -3,8 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 
-const authRoutes = require('./routes/authRoutes');
-const pageRoutes = require('./routes/pageRoutes');
+const apiRoutes = require('./routes/apiRoutes');
+const webRoutes = require('./routes/webRoutes');
 
 const app = express();
 
@@ -30,8 +30,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // UI routes
-app.use('/', pageRoutes);
+app.use('/', webRoutes);
 
-app.use('/api', authRoutes);
+app.use('/api', apiRoutes);
 
 module.exports = app;
