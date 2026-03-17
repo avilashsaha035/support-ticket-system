@@ -26,6 +26,11 @@ const register = async (req, res) => {
             password: hashedPassword
         });
 
+        // if request from browser form then redirect to view
+        if (req.headers.accept && req.headers.accept.includes('text/html')) {
+            return res.redirect('/dashboard');
+        }
+
         res.status(201).json({
             message: "User registered successfully",
             user
@@ -65,6 +70,11 @@ const login = async (req, res) => {
         req.session.userId = user.id;
         req.session.role = user.role;
 
+        // if request from browser form then redirect to view
+        if (req.headers.accept && req.headers.accept.includes('text/html')) {
+            return res.redirect('/dashboard');
+        }
+
         res.json({
             message: "Login Successful",
             user
@@ -80,9 +90,14 @@ const login = async (req, res) => {
 
 const logout = (req, res) => {
     req.session.destroy(() => {
-        res.json({
-            message: "Logged out successfully"
-        });
+        const isHTML = req.headers.accept && req.headers.accept.includes('text/html');
+        if (isHTML) {
+            return res.redirect('/login');
+        } else {
+            return res.json({ 
+                message: "Logged out successfully" 
+            });
+        }
     });
 };
 
