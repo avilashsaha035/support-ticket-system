@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const isAuth = require('../middlewires/authMiddleware');
 const upload = require('../middlewires/upload');
 
 const {
@@ -14,6 +15,7 @@ const {
 const {
   showCreateTicket,
   createTicket,
+  myTickets
 } = require('../controllers/ticketController');
 
 
@@ -27,7 +29,8 @@ router.post('/logout', logout);
 router.get('/dashboard', showDashboard);
 
 // ticket 
-router.get('/create-ticket', showCreateTicket);
-router.post('/create-ticket', upload.single('file'), createTicket);
+router.get('/create-ticket', isAuth, showCreateTicket);
+router.post('/create-ticket', isAuth, upload.single('file'), createTicket);
+router.get('/my-tickets', isAuth, myTickets);
 
 module.exports = router;

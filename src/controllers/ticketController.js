@@ -17,7 +17,16 @@ const createTicket = async (req, res) => {
     res.redirect('/my-tickets');
 };
 
+const myTickets = async (req, res) => {
+    const tickets = await Ticket.findAll({
+        where: { user_id: req.session.userId }
+    });
+
+    res.render('my-tickets', { tickets });
+};
+
 module.exports = {
     showCreateTicket,
     createTicket,
+    myTickets
 };

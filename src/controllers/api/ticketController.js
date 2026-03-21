@@ -17,6 +17,14 @@ const createTicket = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Error creating ticket" });
     }
+};
+
+const myTickets = async (req, res) => {
+    const tickets = await Ticket.findAll({
+        where: { user_id: req.session.userId }
+    });
+
+    res.json(tickets);
 }
 
-module.exports = { createTicket };
+module.exports = { createTicket, myTickets };
