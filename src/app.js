@@ -29,6 +29,9 @@ app.set('views', path.join(__dirname, 'views'));
 // static files (css/js)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// uploaded files
+app.use('/uploads', express.static('src/uploads'));
+
 // UI routes
 app.use('/', webRoutes);
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/upload');
+const upload = require('../middlewires/upload');
+
 const { register, login, logout } = require('../controllers/api/authController');
 const { createTicket } = require('../controllers/api/ticketController');
 
