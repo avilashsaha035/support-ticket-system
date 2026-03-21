@@ -12,11 +12,12 @@ const {
 
 
 router.get('/register', showRegister);
-router.get('/login', showLogin);
-router.get('/dashboard', showDashboard);
-
 router.post('/register', register);
+
+router.get('/login', showLogin);
 router.post('/login', login);
+
 router.post('/logout', logout);
+router.get('/dashboard', showDashboard);
 
 module.exports = router;
