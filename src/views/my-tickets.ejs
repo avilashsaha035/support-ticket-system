@@ -15,6 +15,7 @@
                     <th class="text-center">Title</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">File</th>
+                    <th class="text-center">Action</th>
                 </tr>
 
                 <% tickets.forEach(ticket => { %>
@@ -28,6 +29,9 @@
                             <% } else { %>
                                 No File
                             <% } %>
+                        </td>
+                        <td class="text-center">
+                            <a href="/edit-ticket/<%= ticket.id %>" class="btn btn-sm btn-warning">Edit</a>
                         </td>
                     </tr>
                 <% }) %>

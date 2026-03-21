@@ -15,7 +15,9 @@ const {
 const {
   showCreateTicket,
   createTicket,
-  myTickets
+  myTickets,
+  showEditTicket,
+  updateTicket
 } = require('../controllers/ticketController');
 
 
@@ -32,5 +34,7 @@ router.get('/dashboard', showDashboard);
 router.get('/create-ticket', isAuth, showCreateTicket);
 router.post('/create-ticket', isAuth, upload.single('file'), createTicket);
 router.get('/my-tickets', isAuth, myTickets);
+router.get('/edit-ticket/:id', isAuth, showEditTicket);
+router.post('/edit-ticket/:id', isAuth, upload.single('file'), updateTicket);
 
 module.exports = router;
