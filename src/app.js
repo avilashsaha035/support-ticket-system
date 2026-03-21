@@ -8,12 +8,12 @@ const webRoutes = require('./routes/webRoutes');
 
 const app = express();
 
-// built-in middlewire
+// built-in middleware
 app.use(express.json()); //convert json data(come from client req) to js object
 
 app.use(express.urlencoded({ extended: true })); // for HTML form data
 
-//session middlewire
+//session middleware
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
