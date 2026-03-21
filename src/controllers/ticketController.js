@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { Ticket } = require('../models');
 
 const showCreateTicket = (req, res) => {
@@ -60,6 +62,17 @@ const updateTicket = async (req, res) => {
 
     // update file if new one uploaded
     if (req.file) {
+
+        // delete old file if exists
+        if (ticket.file_path) {
+            const oldPath = path.join(__dirname, '../uploads', ticket.file_path);
+
+            if (fs.existsSync(oldPath)) {
+                fs.unlinkSync(oldPath);
+            }
+        }
+
+        // save new file
         ticket.file_path = req.file.filename;
     }
 
@@ -67,6 +80,7 @@ const updateTicket = async (req, res) => {
 
     res.redirect('/my-tickets');
 }
+
 
 module.exports = {
     showCreateTicket,
