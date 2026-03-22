@@ -78,7 +78,11 @@ const login = async (req, res) => {
         req.session.userId = user.id;
         req.session.role = user.role;
 
-        res.redirect('/dashboard');
+        if (user.role === 'admin') {
+            return res.redirect('/admin/tickets');
+        } else {
+            return res.redirect('/dashboard');
+        }
 
     } catch (error) {
         console.error(error);

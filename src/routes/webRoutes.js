@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const isAdmin = require('../middlewires/adminMiddleware');
 const isAuth = require('../middlewires/authMiddleware');
 const upload = require('../middlewires/upload');
+
+const { allTickets, updateStatus } = require('../controllers/adminController');
 
 const {
   showRegister,
@@ -20,6 +23,12 @@ const {
   updateTicket
 } = require('../controllers/ticketController');
 
+// =============================== Admin Route =================================== //
+
+router.get('/admin/tickets', isAdmin, allTickets);
+router.post('/admin/tickets/:id/status', isAdmin, updateStatus);
+
+// =============================== Admin Route =================================== //
 
 router.get('/register', showRegister);
 router.post('/register', register);

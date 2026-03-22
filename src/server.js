@@ -4,7 +4,7 @@ require('./models');
 
 (async () => {
     try{
-        await sequelize.sync({ alter: true });  // create tables in db according to model code
+        await sequelize.sync();  // create tables in db according to model code
         console.log('Database synced');
 
         app.listen(process.env.PORT, () => {
