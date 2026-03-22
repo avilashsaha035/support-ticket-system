@@ -14,18 +14,25 @@ const allTickets = async (req, res) => {
 
 // update status
 const updateStatus = async (req, res) => {
-    const { status } = req.body;
+    try {
+        const { status } = req.body;
+        const ticket = await Ticket.findByPk(req.params.id);
 
-    const ticket = await Ticket.findByPk(req.params.id);
+        if (!ticket) {
+            return res.redirect('/admin/tickets');
+        }
 
-    if (!ticket) {
-        return res.redirect('/admin/tickets');
+        ticket.status = status;
+        await ticket.save();
+
+        res.json({
+            message: "Status updated",
+            status: ticket.status
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Error updating status" });
     }
-
-    ticket.status = status;
-    await ticket.save();
-
-    res.redirect('/admin/tickets');
 };
 
 module.exports = { allTickets, updateStatus }

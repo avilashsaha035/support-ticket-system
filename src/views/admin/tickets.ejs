@@ -30,28 +30,77 @@
                         <td><%= ticket.User.email %></td>
                         <td><%= ticket.title %></td>
                         <td>
-                            <span class="badge bg-info"><%= ticket.status %></span>
+                            <span class="badge status-badge 
+                                <% if(ticket.status === 'open') { %> bg-info <% } %>
+                                <% if(ticket.status === 'in_progress') { %> bg-warning <% } %>
+                                <% if(ticket.status === 'closed') { %> bg-success <% } %>"
+                                id="status-<%= ticket.id %>"
+                            >
+                                <%= ticket.status %>
+                            </span>
                         </td>
                         <td>
                             <% if(ticket.file_path) { %>
-                                <img src="/uploads/<%= ticket.file_path %>" width="60">
+                                <img src="/uploads/<%= ticket.file_path %>" style = "width: auto; height: 80px;">
                             <% } %>
                         </td>
 
                         <td>
-                            <form action="/admin/tickets/<%= ticket.id %>/status" method="POST">
-                                <select name="status" class="form-select mb-2">
-                                    <option value="open" <%= ticket.status === 'open' ? 'selected' : '' %>>Open</option>
-                                    <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
-                                    <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>>Closed</option>
-                                </select>
-
-                                <button class="btn btn-sm btn-success">Update</button>
-                            </form>
+                            <select class="form-select status-dropdown" data-id="<%= ticket.id %>">
+                                <option value="open" <%= ticket.status === 'open' ? 'selected' : '' %>>Open</option>
+                                <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+                                <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>>Closed</option>
+                            </select>
                         </td>
                     </tr>
                 <% }) %>
             </table>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.status-dropdown').on('change', function () {
+                    const ticketId = $(this).data('id');
+                    const newStatus = $(this).val();
+                    const currentDropdown = $(this);
+
+                    $.ajax({
+                        url: '/admin/tickets/' + ticketId + '/status',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ status: newStatus }),
+
+                        success: function (response) {
+                            // update badge text
+                            const badge = $('#status-' + ticketId);
+                            badge.text(newStatus);
+
+                            badge.removeClass('bg-info bg-warning bg-success');
+                            
+                            if (newStatus === 'open') {
+                                badge.addClass('bg-info');
+                            } else if (newStatus === 'in_progress') {
+                                badge.addClass('bg-warning');
+                            } else if (newStatus === 'closed') {
+                                badge.addClass('bg-success');
+                            }
+                            
+                            // optional visual feedback
+                            currentDropdown.addClass('border-success');
+
+                            setTimeout(() => {
+                                currentDropdown.removeClass('border-success');
+                            }, 1000);
+                        },
+
+                        error: function (xhr) {
+                            const message = xhr.responseJSON?.message || 'Error';
+                            alert(message);
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
