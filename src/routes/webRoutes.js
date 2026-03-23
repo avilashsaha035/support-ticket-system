@@ -30,6 +30,12 @@ router.post('/admin/tickets/:id/status', isAdmin, updateStatus);
 
 // =============================== Admin Route =================================== //
 
+router.get('/', (req, res) => {
+  if (req.session.userId) {
+    return res.redirect('/dashboard');
+  }
+  res.render('index');
+});
 router.get('/register', showRegister);
 router.post('/register', register);
 

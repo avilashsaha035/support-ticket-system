@@ -57,6 +57,254 @@ body.glow-br::before { bottom: -200px; right: -200px; background: radial-gradien
     z-index: 50;
 }
 
+
+/* ============================================================
+   INDEX / LANDING PAGE
+   ============================================================ */
+
+/* ── Hero Badge ── */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(91, 110, 245, .12);
+    color: var(--accent);
+    border: 1px solid rgba(91, 110, 245, .25);
+    border-radius: 100px;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    letter-spacing: .04em;
+    animation: fadeUp .4s ease both;
+}
+.hero-badge span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+}
+
+/* ── Hero Title ── */
+.hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    animation: fadeUp .4s .08s ease both;
+}
+.hero-title .highlight {
+    background: linear-gradient(135deg, #5b6ef5 0%, #38c8e8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    animation: fadeUp .4s .16s ease both;
+}
+
+.hero-actions { animation: fadeUp .4s .24s ease both; }
+
+/* ── Hero Buttons ── */
+.btn-hero-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: .75rem 2rem;
+    font-weight: 600;
+    font-size: .95rem;
+    transition: opacity .2s, transform .2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-hero-primary:hover { opacity: .88; transform: translateY(-2px); color: #fff; }
+
+.btn-hero-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .75rem 2rem;
+    font-weight: 500;
+    font-size: .95rem;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-hero-secondary:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+
+/* ── Mockup Floating Card ── */
+.mockup-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+}
+
+.mockup-mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+}
+
+.mockup-progress-track {
+    height: 4px;
+    background: var(--surface);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.mockup-progress-fill {
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    border-radius: 4px;
+}
+
+.glow-circle {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(91,110,245,.13) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* ── Stats Strip ── */
+.stats-strip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    animation: fadeUp .4s .3s ease both;
+}
+
+.stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+}
+
+.stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: .78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-top: 4px;
+}
+
+/* ── Feature Cards ── */
+.feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.75rem;
+    transition: border-color .2s, transform .2s;
+    animation: fadeUp .4s ease both;
+}
+.feature-card:hover { border-color: rgba(91,110,245,.3); transform: translateY(-3px); }
+.feature-card.d1 { animation-delay: .10s; }
+.feature-card.d2 { animation-delay: .18s; }
+.feature-card.d3 { animation-delay: .26s; }
+
+.feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+/* ── Hero Trust Checklist ── */
+.hero-trust { display: flex; flex-direction: column; gap: 8px; }
+.hero-trust-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .875rem; color: var(--muted);
+}
+
+/* ── Hero Avatar Stack ── */
+.hero-avatars { display: flex; align-items: center; gap: 12px; }
+.avatar-stack { display: flex; }
+.hero-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem; font-weight: 700; color: #fff;
+    margin-right: -8px;
+}
+.avatar-stack .hero-avatar:last-child { margin-right: 0; }
+
+/* ── Mockup Toast ── */
+.mockup-toast {
+    background: var(--card);
+    border: 1px solid rgba(34, 201, 138, .2);
+    border-radius: 14px;
+    padding: .85rem 1.1rem;
+    animation: float 4s ease-in-out infinite;
+}
+
+/* ── How It Works ── */
+.howit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: border-color .2s, transform .2s;
+    animation: fadeUp .4s ease both;
+}
+.howit-card:hover { border-color: rgba(91,110,245,.3); transform: translateY(-3px); }
+.howit-card.howit-card-active {
+    border-color: rgba(91,110,245,.35);
+    background: linear-gradient(160deg, rgba(91,110,245,.08) 0%, var(--card) 60%);
+}
+.howit-step {
+    font-family: 'Syne', sans-serif;
+    font-size: .9rem; font-weight: 800;
+    letter-spacing: .1em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 1rem;
+}
+.howit-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+
+/* ── CTA Banner ── */
+.cta-banner {
+    background: linear-gradient(135deg, rgba(91,110,245,.15) 0%, rgba(56,200,232,.08) 100%);
+    border: 1px solid rgba(91,110,245,.2);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    animation: fadeUp .4s ease both;
+}
+
+/* ── Footer ── */
+.site-footer { border-top: 1px solid var(--border); }
+
 .brand-icon {
     width: 36px;
     height: 36px;
