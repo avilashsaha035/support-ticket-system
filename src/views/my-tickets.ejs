@@ -1,41 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>My Tickets</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+<body>
 
-    <body class="bg-light">
-        <div class="container mt-5">
-            <h3>My Tickets</h3>
-            <a href="/create-ticket" class="btn btn-success mb-3">Create Ticket</a>
-
-            <table class="table table-bordered">
-                <tr>
-                    <th class="text-center">Title</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">File</th>
-                    <th class="text-center">Action</th>
-                </tr>
-
-                <% tickets.forEach(ticket => { %>
-                    <tr>
-                        <td class="text-center"><%= ticket.title %></td>
-                        <td class="text-center"><%= ticket.status %></td>
-                        <td class="text-center">
-                            <% if(ticket.file_path) { %>
-                                <img src="/uploads/<%= ticket.file_path %>" alt="ticket image" style="width:auto; height:80px; object-fit:cover; border-radius:5px; cursor:pointer; transition:0.3s;"
-                                    onclick="window.open(this.src)" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                            <% } else { %>
-                                No File
-                            <% } %>
-                        </td>
-                        <td class="text-center">
-                            <a href="/edit-ticket/<%= ticket.id %>" class="btn btn-sm btn-warning">Edit</a>
-                        </td>
-                    </tr>
-                <% }) %>
-            </table>
+    <!-- Header -->
+    <header class="site-header px-4 px-md-5 py-3 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <div class="brand-icon">
+                <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4a2 2 0 002 2h4a2 2 0 002-2V5a2 2 0 00-2-2zm0 12H5a2 2 0 00-2 2v4a2 2 0 002 2h4a2 2 0 002-2v-4a2 2 0 00-2-2zm10-12h-4a2 2 0 00-2 2v4a2 2 0 002 2h4a2 2 0 002-2V5a2 2 0 00-2-2zm0 12h-4a2 2 0 00-2 2v4a2 2 0 002 2h4a2 2 0 002-2v-4a2 2 0 00-2-2z"/></svg>
+            </div>
+            <div>
+                <div class="fw-bold" style="font-family:'Syne',sans-serif; font-size:1rem; line-height:1;">Support Portal</div>
+                <div style="font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em;">My Tickets</div>
+            </div>
         </div>
-    </body>
+        <form action="/logout" method="POST">
+            <button class="btn btn-outline-ghost px-3 py-2 d-flex align-items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                Logout
+            </button>
+        </form>
+    </header>
+
+    <!-- Main -->
+    <main class="container py-5" style="max-width:1100px; position:relative; z-index:1;">
+
+        <!-- Page Top -->
+        <div class="d-flex align-items-center justify-content-between mb-4" style="animation: fadeUp .3s ease both;">
+            <div>
+                <h2 class="fw-bold mb-1" style="font-family:'Syne',sans-serif; font-size:1.4rem; letter-spacing:-.02em;">My Tickets</h2>
+                <p class="mb-0" style="color:var(--muted); font-size:.875rem;">Track and manage your support requests.</p>
+            </div>
+            <a href="/create-ticket" class="btn btn-accent text-white px-4 py-2 d-flex align-items-center gap-2">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                New Ticket
+            </a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-card">
+            <div class="table-card-header px-4 py-3 d-flex align-items-center justify-content-between">
+                <span class="fw-bold" style="font-family:'Syne',sans-serif; font-size:.95rem;">All Tickets</span>
+                <span class="ticket-count-pill"><%= tickets.length %> total</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table mb-0 w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Attachment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(tickets.length === 0) { %>
+                        <tr>
+                            <td colspan="5" class="text-center py-5" style="color:var(--muted);">
+                                <svg class="mb-3 d-block mx-auto" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="opacity:.3;"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                <p class="mb-0" style="font-size:.875rem;">No tickets yet. <a href="/create-ticket" style="color:var(--accent);">Create one</a>.</p>
+                            </td>
+                        </tr>
+                        <% } %>
+
+                        <% tickets.forEach((ticket, i) => {
+                            const badgeClass = ticket.status === 'open' ? 'badge-open'
+                                             : ticket.status === 'in_progress' ? 'badge-progress'
+                                             : 'badge-closed';
+                            const label = ticket.status === 'in_progress' ? 'In Progress'
+                                        : ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1);
+                        %>
+                        <tr>
+                            <td>
+                                <div class="ticket-num">#<%= i + 1 %></div>
+                            </td>
+                            <td>
+                                <div class="fw-medium" style="font-size:.875rem;"><%= ticket.title %></div>
+                            </td>
+                            <td>
+                                <span class="status-badge <%= badgeClass %>"><%= label %></span>
+                            </td>
+                            <td>
+                                <% if(ticket.file_path) { %>
+                                    <img src="/uploads/<%= ticket.file_path %>" alt="attachment"
+                                        class="file-thumb" onclick="window.open(this.src)">
+                                <% } else { %>
+                                    <span style="color:var(--muted); font-size:.8rem;">—</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/edit-ticket/<%= ticket.id %>" class="btn btn-edit text-decoration-none">Edit</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</body>
 </html>
